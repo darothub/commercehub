@@ -9,13 +9,13 @@ import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 public record CreateProductDTO(
-        @NotBlank(message = "Name is required")
+        @NotBlank(message = "is required")
         String name,
         String description,
-        @NotNull(message = "Price is required")
-        @PositiveOrZero(message = "Price must be zero or positive")
+        @NotNull(message = "is required")
+        @PositiveOrZero(message = "must be zero or positive")
         BigDecimal price,
-        @NotNull(message = "Stock is required")
-        @Min(value = 1, message = "Stock must be at least 1")
+        @NotNull(message = "is required")
+        @Min(value = 1, message = "must be at least 1")
         Integer stock
 ) {}

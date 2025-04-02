@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ public class OrderEntity {
     private UUID id;
     private String customerName;
     private String customerEmail;
+    BigDecimal totalPrice;
     private Instant orderDate;
     private OrderStatus status;
 

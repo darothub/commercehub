@@ -11,6 +11,7 @@ public interface OrderDomainMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderDate", ignore = true)
+    @Mapping(target = "status", ignore = true)
     OrderEntity toEntity(CreateOrderDTO dto);
     OrderEntity toEntity(OrderDTO dto);
 }

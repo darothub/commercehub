@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-class OrderServiceImplTest {
+class ProductServiceImplTest {
 
     @Mock
     private ProductRepository productRepository;
@@ -69,7 +69,6 @@ class OrderServiceImplTest {
         );
     }
 
-    // Helper method
     private CreateProductDTO createTestCreateDTO() {
         return new CreateProductDTO(
                 "New Product",

@@ -5,7 +5,7 @@ import com.example.commercehub.product.infrastructure.repository.ProductReposito
 import com.example.commercehub.product.presentation.dto.CreateProductDTO;
 import com.example.commercehub.product.presentation.dto.ProductDTO;
 import com.example.commercehub.product.presentation.dto.UpdateProductDTO;
-import com.example.commercehub.product.presentation.mapper.LocalProductDTOMapper;
+import com.example.commercehub.product.presentation.mapper.ProductDomainMapper;
 import com.example.commercehub.product.presentation.mapper.ProductEntityMapper;
 import com.example.commercehub.shared.exception.InvalidProductUpdateException;
 import com.example.commercehub.shared.exception.ResourceNotFoundException;
@@ -34,7 +34,7 @@ class OrderServiceImplTest {
     private ProductRepository productRepository;
 
     @Mock
-    private LocalProductDTOMapper localProductDTOMapper;
+    private ProductDomainMapper productDomainMapper;
 
     @Mock
     private ProductEntityMapper productEntityMapper;
@@ -147,7 +147,7 @@ class OrderServiceImplTest {
                 .stock(createDTO.stock())
                 .build();
 
-        when(localProductDTOMapper.toEntity(createDTO)).thenReturn(newEntity);
+        when(productDomainMapper.toEntity(createDTO)).thenReturn(newEntity);
         when(productRepository.saveAndFlush(newEntity)).thenReturn(testEntity);
         when(productEntityMapper.toDTO(testEntity)).thenReturn(testDTO);
 
@@ -155,7 +155,7 @@ class OrderServiceImplTest {
         ProductDTO result = productService.create(createDTO);
 
         assertThat(result).isEqualTo(testDTO);
-        verify(localProductDTOMapper).toEntity(createDTO);
+        verify(productDomainMapper).toEntity(createDTO);
         verify(productRepository).saveAndFlush(newEntity);
         verify(productEntityMapper).toDTO(testEntity);
     }

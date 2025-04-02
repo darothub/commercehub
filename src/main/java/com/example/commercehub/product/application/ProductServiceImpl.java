@@ -5,7 +5,7 @@ import com.example.commercehub.product.infrastructure.repository.ProductReposito
 import com.example.commercehub.product.presentation.dto.CreateProductDTO;
 import com.example.commercehub.product.presentation.dto.ProductDTO;
 import com.example.commercehub.product.presentation.dto.UpdateProductDTO;
-import com.example.commercehub.product.presentation.mapper.LocalProductDTOMapper;
+import com.example.commercehub.product.presentation.mapper.ProductDomainMapper;
 import com.example.commercehub.product.presentation.mapper.ProductEntityMapper;
 import com.example.commercehub.shared.exception.InvalidProductUpdateException;
 import com.example.commercehub.shared.exception.ResourceNotFoundException;
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final LocalProductDTOMapper localProductDTOMapper;
+    private final ProductDomainMapper productDomainMapper;
     private final ProductEntityMapper productEntityMapper;
 
     @Override
@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO create(CreateProductDTO dto) {
-        ProductEntity entity = localProductDTOMapper.toEntity(dto);
+        ProductEntity entity = productDomainMapper.toEntity(dto);
         ProductEntity saved = productRepository.saveAndFlush(entity);
         log.info("Created product with id {}, {}", saved.getCreatedAt(), saved.getUpdatedAt());
         return productEntityMapper.toDTO(saved);

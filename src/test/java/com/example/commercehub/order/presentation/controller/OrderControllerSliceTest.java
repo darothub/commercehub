@@ -111,7 +111,7 @@ class OrderControllerSliceTest {
     @Test
     void updateOrder_shouldReturn200WithUpdatedOrder() throws Exception {
 
-        UpdateOrderDTO updateDto = new UpdateOrderDTO("You", "you@example.com", OrderStatus.PROCESSING);
+        UpdateOrderDTO updateDto = new UpdateOrderDTO("You", "you@example.com",BigDecimal.valueOf(10.0), OrderStatus.PROCESSING);
         OrderDTO updatedDto = new OrderDTO(
                 testOrderId,
                 "You",
@@ -134,7 +134,7 @@ class OrderControllerSliceTest {
     @Test
     void updateOrder_withPartialUpdate_shouldReturn200() throws Exception {
 
-        UpdateOrderDTO partialUpdate = new UpdateOrderDTO(null, "new@example.com", null);
+        UpdateOrderDTO partialUpdate = new UpdateOrderDTO(null, "new@example.com", BigDecimal.valueOf(10.0),null);
         OrderDTO updatedDto = new OrderDTO(
                 testOrderId,
                 testOrderDto.customerName(),
@@ -150,8 +150,8 @@ class OrderControllerSliceTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(partialUpdate)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.customerName").value("Me")) // unchanged
-                .andExpect(jsonPath("$.data.customerEmail").value("new@example.com")); // updated
+                .andExpect(jsonPath("$.data.customerName").value("Me"))
+                .andExpect(jsonPath("$.data.customerEmail").value("new@example.com"));
     }
 
     @Test

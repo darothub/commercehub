@@ -50,12 +50,19 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Transactional
     @Override
     public OrderItemDTO updateOrderItem(UUID id, UpdateOrderItemDTO dto) {
-        OrderItemDTO orderItemDTO = getOrderItemById(id);
-        OrderItemEntity orderItemEntity = orderItemDomainMapper.toEntity(orderItemDTO);
+        OrderItemEntity orderItemEntity = orderItemRepository.findById(id)
+                        .orElseThrow(() -> logAndThrow(id));
+
+        orderItemEntity.setOrderId(dto.orderId());
+        orderItemEntity.setQuantity(dto.quantity());
+        orderItemEntity.setProductId(dto.productId());
+        orderItemEntity.setUnitPrice(dto.unitPrice());
+
         log.info("Updating order with id: {}", id);
-        orderItemEntity = orderItemRepository.saveAndFlush(orderItemEntity);
+        var savedOrderItemEntity = orderItemRepository.saveAndFlush(orderItemEntity);
+
         log.info("Order item with id updated: {}", id);
-        return orderItemEntityMapper.toDTO(orderItemEntity);
+        return orderItemEntityMapper.toDTO(savedOrderItemEntity);
     }
 
 

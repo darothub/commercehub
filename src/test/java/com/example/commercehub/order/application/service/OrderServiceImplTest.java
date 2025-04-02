@@ -51,15 +51,15 @@ class OrderServiceImplTest {
         testOrderId = UUID.randomUUID();
         testOrderEntity = OrderEntity.builder()
                 .id(testOrderId)
-                .customerName("John Doe")
-                .customerEmail("john@example.com")
+                .customerName("Me")
+                .customerEmail("me@example.com")
                 .status(OrderStatus.CREATED)
                 .build();
 
-        testOrderDTO = new OrderDTO(testOrderId, "John Doe", "john@example.com", BigDecimal.valueOf(10.0), Instant.now(), OrderStatus.CREATED);
+        testOrderDTO = new OrderDTO(testOrderId, "Me", "me@example.com", BigDecimal.valueOf(10.0), Instant.now(), OrderStatus.CREATED);
 
-        testCreateOrderDTO = new CreateOrderDTO("John Doe", "john@example.com", BigDecimal.valueOf(10.0));
-        testUpdateOrderDTO = new UpdateOrderDTO("Jane Doe", "jane@example.com", OrderStatus.PROCESSING);
+        testCreateOrderDTO = new CreateOrderDTO("Me", "me@example.com", BigDecimal.valueOf(10.0));
+        testUpdateOrderDTO = new UpdateOrderDTO("You", "you@example.com", BigDecimal.valueOf(10.0), OrderStatus.PROCESSING);
     }
 
     @Test
@@ -138,8 +138,6 @@ class OrderServiceImplTest {
         );
 
         when(orderRepository.findById(testOrderId)).thenReturn(Optional.of(testOrderEntity));
-        when(orderEntityMapper.toDTO(testOrderEntity)).thenReturn(testOrderDTO);
-        when(orderDomainMapper.toEntity(testOrderDTO)).thenReturn(testOrderEntity);
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(updatedEntity);
         when(orderEntityMapper.toDTO(updatedEntity)).thenReturn(updatedDTO);
 
@@ -151,13 +149,13 @@ class OrderServiceImplTest {
 
         verify(orderRepository).findById(testOrderId);
         verify(orderRepository).save(testOrderEntity);
-        verify(orderEntityMapper, times(2)).toDTO(any());
+        verify(orderEntityMapper, times(1)).toDTO(any());
     }
 
     @Test
     void updateOrder_withPartialUpdates_shouldOnlyUpdateProvidedFields() {
 
-        UpdateOrderDTO partialUpdate = new UpdateOrderDTO(null, "newme@example.com", null);
+        UpdateOrderDTO partialUpdate = new UpdateOrderDTO(null, "newme@example.com", BigDecimal.valueOf(10.0),null);
 
         OrderEntity updatedEntity = OrderEntity.builder()
                 .id(testOrderId)
@@ -167,8 +165,6 @@ class OrderServiceImplTest {
                 .build();
 
         when(orderRepository.findById(testOrderId)).thenReturn(Optional.of(testOrderEntity));
-        when(orderEntityMapper.toDTO(testOrderEntity)).thenReturn(testOrderDTO);
-        when(orderDomainMapper.toEntity(testOrderDTO)).thenReturn(testOrderEntity);
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(updatedEntity);
         when(orderEntityMapper.toDTO(updatedEntity)).thenReturn(
                new OrderDTO(

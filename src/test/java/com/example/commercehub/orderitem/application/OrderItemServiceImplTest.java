@@ -157,8 +157,6 @@ class OrderItemServiceImplTest {
                 BigDecimal.valueOf(24.99));
 
         given(orderItemRepository.findById(testOrderItemId)).willReturn(Optional.of(testOrderItemEntity));
-        given(orderItemEntityMapper.toDTO(testOrderItemEntity)).willReturn(testOrderItemDTO);
-        given(orderItemDomainMapper.toEntity(testOrderItemDTO)).willReturn(testOrderItemEntity);
         given(orderItemRepository.saveAndFlush(testOrderItemEntity)).willReturn(updatedEntity);
         given(orderItemEntityMapper.toDTO(updatedEntity)).willReturn(updatedDTO);
 
@@ -195,8 +193,6 @@ class OrderItemServiceImplTest {
                 BigDecimal.valueOf(19.99));
 
         given(orderItemRepository.findById(testOrderItemId)).willReturn(Optional.of(testOrderItemEntity));
-        given(orderItemEntityMapper.toDTO(testOrderItemEntity)).willReturn(testOrderItemDTO);
-        given(orderItemDomainMapper.toEntity(testOrderItemDTO)).willReturn(testOrderItemEntity);
         given(orderItemRepository.saveAndFlush(testOrderItemEntity)).willReturn(updatedEntity);
         given(orderItemEntityMapper.toDTO(updatedEntity)).willReturn(updatedDTO);
 

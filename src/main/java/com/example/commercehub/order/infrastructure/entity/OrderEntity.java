@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -26,6 +27,7 @@ public class OrderEntity {
     private String customerName;
     private String customerEmail;
     BigDecimal totalPrice;
+    @CreationTimestamp
     private Instant orderDate;
     private OrderStatus status;
 

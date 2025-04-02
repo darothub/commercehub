@@ -54,16 +54,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO updateOrder(UUID id, UpdateOrderDTO updateOrderDTO) {
-        OrderDTO orderDTO = getOrderById(id);
-        OrderEntity orderEntity = orderDomainMapper.toEntity(orderDTO);
+        OrderEntity orderEntity = orderRepository.findById(id)
+                .orElseThrow(() -> logAndThrow(id));
+
         log.info("Checking update with id: {}", id);
-        if(updateOrderDTO.customerEmail() != null && !updateOrderDTO.customerEmail().isBlank()) orderEntity.setCustomerEmail(updateOrderDTO.customerEmail());
-        if (updateOrderDTO.customerName() != null && !updateOrderDTO.customerName().isBlank()) orderEntity.setCustomerName(updateOrderDTO.customerName());
-        if (updateOrderDTO.orderStatus() != null) orderEntity.setStatus(updateOrderDTO.orderStatus());
+
+        orderEntity.setCustomerName(updateOrderDTO.customerName());
+        orderEntity.setCustomerEmail(updateOrderDTO.customerEmail());
+        orderEntity.setTotalPrice(updateOrderDTO.totalPrice());
+        orderEntity.setStatus(updateOrderDTO.orderStatus());
+
         log.info("Updating order with id: {}", id);
-        orderEntity = orderRepository.save(orderEntity);
+        var savedEntity = orderRepository.save(orderEntity);
         log.info("Order with id updated: {}", id);
-        return orderEntityMapper.toDTO(orderEntity);
+        return orderEntityMapper.toDTO(savedEntity);
     }
 
     @Override

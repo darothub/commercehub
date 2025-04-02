@@ -19,6 +19,7 @@ public class OrderItemEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Version
+    @Column(updatable = false)
     private Long version;
     private UUID productId;
     private UUID orderId;

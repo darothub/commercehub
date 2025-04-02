@@ -3,7 +3,6 @@ package com.example.commercehub.product.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.UUID;

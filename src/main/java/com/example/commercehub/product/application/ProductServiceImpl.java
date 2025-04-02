@@ -12,6 +12,7 @@ import com.example.commercehub.shared.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -40,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
                 .map(productEntityMapper::toDTO)
                 .orElseThrow(() -> logAndThrow(id));
     }
-
+    @Transactional
     @Override
     public ProductDTO create(CreateProductDTO dto) {
         ProductEntity entity = productDomainMapper.toEntity(dto);
@@ -48,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("Created product with id {}, {}", saved.getCreatedAt(), saved.getUpdatedAt());
         return productEntityMapper.toDTO(saved);
     }
-
+    @Transactional
     @Override
     public ProductDTO update(UUID id, UpdateProductDTO dto) {
         ProductEntity existingEntity = productRepository.findById(id)

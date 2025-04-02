@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 public record CreateOrderDTO(
-        @NotBlank(message = "is required")
+        @NotBlank(message = "Customer name is required")
         String customerName,
-        @Email(message = "invalid email")
+        @Email(message = "Invalid email")
         String customerEmail,
         BigDecimal totalPrice
 ) {}

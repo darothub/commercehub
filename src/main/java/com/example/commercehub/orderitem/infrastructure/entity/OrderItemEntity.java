@@ -1,6 +1,4 @@
-package com.example.commercehub.order.infrastructure.entity;
-
-import com.example.commercehub.order.domain.OrderStatus;
+package com.example.commercehub.orderitem.infrastructure.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,26 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "order_items")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderEntity {
+public class OrderItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Version
     private Long version;
-    private String customerName;
-    private String customerEmail;
-    BigDecimal totalPrice;
-    private Instant orderDate;
-    private OrderStatus status;
-
-
+    private UUID productId;
+    private UUID orderId;
+    private Integer quantity;
+    private BigDecimal unitPrice;
 }
